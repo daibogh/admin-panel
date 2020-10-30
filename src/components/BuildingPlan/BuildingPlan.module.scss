@@ -1,0 +1,266 @@
+$window-color: #fafafa;
+
+@mixin vertical-window {
+    content: "";
+    position: absolute;
+    border: 1px solid $window-color;
+    width: 5px;
+    height: 35px;
+    background-color: white;
+}
+@mixin horizontal-window {
+    content: "";
+    position: absolute;
+    border: 1px solid $window-color;
+    width: 35px;
+    height: 5px;
+    background-color: white;
+}
+@mixin ladder {
+    background: repeating-linear-gradient(
+            -90deg,
+            transparent,
+            transparent 8px,
+            gray 2px,
+            gray 10px,
+          );
+}
+@import 'styles/globals';
+.root {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    @include respond-to(ms) {
+        width: 450px;
+        height: 300px;
+    }
+    @include respond-to(sm) {
+        width: 600px;
+        height: 400px;
+    }
+    
+    display: grid;
+    // grid-template-areas: "a b b c"
+    //                      "d e e f";
+    & div:not(.b):not(.c):hover {
+        // box-sizing: border-box;
+        background-color: greenyellow;
+    }
+}
+.a {
+    position: relative;
+    grid-area: a;
+    border: 5px solid gray;
+    &:before {
+        @include vertical-window;
+        left: -5px;
+        top: 15px;
+    }
+    &::after {
+        
+        @include horizontal-window;
+        top: -5px;
+        left: 25px;
+    }
+    border-right: none;
+}
+.b {
+    position: relative;
+    grid-area: b;
+    border: 5px solid gray;
+    border-left: 3px solid gray;
+    display: grid;
+    grid-template-areas: "r1 r2"
+                         "r1 r2"
+                         "r3 r3";
+    &__r1 {
+        position: relative;
+        grid-area: r1;
+        
+        border-right: 3px solid gray;
+        border-bottom: 3px solid gray;
+        &:before {
+            @include horizontal-window;
+            top: -5px;
+            left: 65px;
+        }
+        &::after {
+            
+            @include horizontal-window;
+            bottom: -3px;
+            left: 85px;
+        }
+    }
+    &__r2 {
+        position: relative;
+        grid-area: r2;
+        border-bottom: 3px solid gray;
+        &:before {
+            @include horizontal-window();
+            top: -5px;
+            left: 65px;
+        }
+        &::after {
+            
+            @include horizontal-window;
+            bottom: -3px;
+            left: 85px;
+        }
+    }
+    &__r3 {
+        position: relative;
+        grid-area: r3;
+        &:before {
+            @include vertical-window;
+            left: -5px;
+            bottom: 15px;
+        }
+        &::after {
+            
+            @include horizontal-window;
+            bottom: -5px;
+            left: calc(50% - 17.5px);
+        }
+        
+    }
+}
+.c {
+    position: relative;
+    margin-top: 10%;
+    grid-area: c;
+    border: 5px solid gray;
+    border-left: none;
+    display: grid;
+    grid-template-areas: "r1"
+                         "r2";
+    &__r1 {
+        position: relative;
+        grid-area: r1;
+        border-bottom: 3px solid gray;
+        display: grid;
+        grid-template-areas: "s1 s2"
+                             "s1 s3";
+        .s1 {
+            grid-area: s1;
+        }
+        .s2 {
+            grid-area: s2;
+            @include ladder;
+            border-bottom:  3px solid gray;
+        }
+        .s3 {
+            grid-area: s3;
+            @include ladder;
+        }     
+        &:before {
+            @include vertical-window;
+            left: -5px;
+            top: 45px;
+        }
+        &::after {
+            
+            @include horizontal-window;
+            top: -5px;
+            left: 25px;
+        }
+    }
+    &__r2 {
+        position: relative;
+        grid-area: r2;
+        &:before {
+            @include vertical-window;
+            left: -5px;
+            top: 35px;
+        }
+        &::after {
+            
+            @include horizontal-window;
+            top: -5px;
+            left: 25px;
+        }
+    }
+}
+.d {
+    position: relative;
+    grid-area: d;
+    border: 5px solid gray;
+    border-top: none;
+    border-right: none;
+    display: grid;
+    grid-template-areas: "s1 s1 s3 s3 s3"
+                         "s2 s2 s3 s3 s3"
+                         ". . s3 s3 s3"
+                         ". . s3 s3 s3";
+        .s1 {
+            grid-area: s1;
+            border-bottom:  3px solid gray;
+            @include ladder;
+            border-right: 2px solid gray;
+        }
+        .s2 {
+            grid-area: s2;
+            @include ladder;
+            border-bottom:  3px solid gray;
+            border-right: 2px solid gray;
+        }
+        .s3 {
+            grid-area: s3;
+        }     
+    &:before {
+        @include vertical-window;
+        left: -5px;
+        bottom: 15px;
+    }
+    &::after {
+        
+        @include horizontal-window;
+        bottom: -5px;
+        left: 25px;
+    }
+}
+.e {
+    position: relative;
+    grid-area: e;
+    border: 5px solid gray;
+    border-left: 3px solid gray;
+    border-top: none;
+    &:before {
+        @include vertical-window;
+        right: -5px;
+        top: 15px;
+    }
+    &::after {
+        
+        @include horizontal-window;
+        bottom: -5px;
+        width: 100px;
+        left: calc(50% - 50px);
+    }
+    &__door {
+        position: absolute;
+        @include vertical-window;
+        left: -3px;
+        top: 25px;
+    }
+}
+.f {
+    position: relative;
+    grid-area: f;
+    border: 5px solid gray;
+    margin-bottom: 10%;
+    border-top: none;
+    border-left: none;
+    &:before {
+        @include vertical-window;
+        right: -5px;
+        height: 75px;
+        top: calc(50% - 37.5px);
+    }
+    &::after {
+        
+        @include horizontal-window;
+        bottom: -5px;
+        width: 50px;
+        left: calc(50% - 25px);
+    }
+}

@@ -1,0 +1,29 @@
+
+$breakpoints: (
+    xs: 320px,
+    s: 360px,
+    w375: 375px,
+    w400: 400px,
+    ms: 480px,
+    xms: 640px,
+    pre-sm: 760px,
+    sm: 768px,
+    pre-md: 1024px,
+    md: 1030px,
+    pre-max: 1360px,
+    laptop: 1440px,
+    lg: 1460px,
+    max: 1460px,
+    xl: 1920px
+);
+
+@mixin respond-to($breakpoint) {
+    @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: #{map-get($breakpoints, $breakpoint)}) {
+        @content;
+    }
+    } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Please make sure it is defined in `$breakpoints` map.";
+    }
+}

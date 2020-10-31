@@ -1,1 +1,1 @@
-export { default as FloorsPlan} from './FloorsPlan'
+export { default as FloorsPlan } from './FloorsPlan'

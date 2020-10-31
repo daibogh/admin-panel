@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
+    "@reach/router": "^1.3.4",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -13,13 +14,16 @@
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
     "classnames": "^2.2.6",
-    "mobx": "^6.0.1",
+    "lodash": "^4.17.20",
+    "mobx": "6",
     "mobx-react": "^7.0.0",
     "node-sass": "^4.14.1",
+    "normalize.css": "^8.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-draggable": "^4.4.3",
     "react-scripts": "4.0.0",
+    "react-use": "^15.3.4",
     "typescript": "^4.0.3",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.3",
@@ -37,10 +41,12 @@
   },
   "scripts": {
     "start": "SASS_PATH=node_modules:src BROWSER=none react-scripts start",
-    "build": "react-scripts build",
+    "build": "SASS_PATH=node_modules:src react-scripts build",
     "serve-build": "yarn build && serve -s build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "cc": "create-component",
+    "eject": "react-scripts eject",
+    "lint-write": "eslint --ext .ts --ext .tsx --ext .js . --fix"
   },
   "eslintConfig": {
     "extends": [
@@ -61,6 +67,14 @@
     ]
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.11"
+    "@types/classnames": "^2.2.11",
+    "@types/lodash": "^4.14.164",
+    "@types/reach__router": "^1.3.6",
+    "create-component": "^0.1.2",
+    "eslint-config-airbnb-typescript": "^12.0.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-json": "^2.1.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "prettier": "^2.1.2"
   }
 }

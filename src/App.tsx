@@ -1,8 +1,9 @@
-import React from 'react';
+import React from 'react'
 import './App.scss'
-import { MainLayout } from './components/MainLayout';
+import { MainLayout } from './components/MainLayout'
+import { StoreProvider } from './store/RootStore'
 
 const App: React.FC = () => {
-  return <MainLayout />
+  return <StoreProvider><MainLayout /></StoreProvider>
 }
-export default App;
+export default App

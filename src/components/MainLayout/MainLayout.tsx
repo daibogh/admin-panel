@@ -22,6 +22,8 @@ import { Router, Link } from "@reach/router"
 import { HomeRoute } from '../HomeRoute'
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import { TemplateRoute } from '../TemplateRoute'
+import { NotificationMessage } from '../NotificationMessage'
+import { BuildingRoute } from '../BuildingRoute'
 
 const drawerWidth = 240
 
@@ -55,7 +57,8 @@ const useStyles = makeStyles((theme: Theme) =>
     content: {
       flexGrow: 1,
       height: 'calc(100% - 64px)',
-      width: '100%'
+      width: '100%',
+      paddingTop: '64px',
       // display: 'flex',
       // justifyContent: 'space-around',
       // alignItems: 'center'
@@ -82,6 +85,7 @@ export default function MainLayout(props: Props) {
           { label: 'План здания', Icon: ControlCameraIcon, path: '/'},
           { label: 'Список сотрудников', Icon: ContactsIcon, path: '/employees' },
           { label: 'Уведомления', Icon: MailIcon, path: '/notifications'},
+          { label: 'Здания', Icon: MailIcon, path: '/buildings'},
           { label: 'Шаблоны', Icon: AddCircleIcon, path: '/templates'}
         ].map(({ label, Icon, path }, index) => (
           <Link to={path}>
@@ -159,8 +163,10 @@ export default function MainLayout(props: Props) {
         <Router>
           <HomeRoute path='/' />
           <TemplateRoute path='/templates' />
+          <BuildingRoute path='/buildings' />
         </Router>
       </main>
+      <NotificationMessage />
     </div>
   )
 }

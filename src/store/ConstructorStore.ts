@@ -1,5 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import _ from 'lodash'
+import axios from 'axios'
+import { toast } from 'react-toastify';
 export class ConstructorStore {
     buildingType: 'road' | 'bridge' | 'house' = 'house'
     layout: string = 'h'
@@ -19,7 +21,12 @@ export class ConstructorStore {
             rooms: observable,
             saveRoom: action,
             latLongs: observable,
-            saveLatLong: action
+            saveLatLong: action,
+            edgesSaved: computed,
+            polygonName: observable,
+            setPolygonName: action,
+            isPolygonNameValid: computed,
+            sendConfigToServer: action
         })
     }
     setRotation = (r: number) => this.rotation = r
@@ -159,8 +166,8 @@ export class ConstructorStore {
                 }
             }
         ))
-        const bottomEdge = Math.min(...(zoneIndexes.map((p)=> p[0]) as number[]))
-        const topEdge = Math.max(...(zoneIndexes.map((p)=> p[0]) as number[]))
+        const bottomEdge = Math.max(...(zoneIndexes.map((p)=> p[0]) as number[]))
+        const topEdge = Math.min(...(zoneIndexes.map((p)=> p[0]) as number[]))
         const leftEdge = Math.min(...(zoneIndexes.map((p)=> p[1]) as number[]))
         const rightEdge = Math.max(...(zoneIndexes.map((p)=> p[1]) as number[]))
         // console.log({ zones, zoneIndexes, bottomEdge, topEdge, leftEdge, rightEdge, buf})
@@ -171,9 +178,44 @@ export class ConstructorStore {
             right: Object.keys(buf).find(key => buf[key][1] === rightEdge),
         }
     }
-    latLongs: { area: string; lat: number; long: number }[] = []
+    latLongs: {[key: string]:{ area: string; lat: number; long: number }} = {}
     saveLatLong = ({ area, lat, long}: { area: string; lat: number; long: number}) => {
-        this.latLongs.push({area, lat, long})
+        this.latLongs[area] = {area, lat, long}
+    }
+    get edgesSaved() {
+
+        return _.uniq(Object.values(this.areaEdges)).length === Object.keys(this.latLongs).length
+    }
+    polygonName: string = ''
+
+    setPolygonName = (name: string) => {
+        this.polygonName = name
+    }
+    get isPolygonNameValid() {
+        return this.polygonName.length > 4
+    }
+
+    sendConfigToServer = () => {
+        const { latLongs, areas, rooms, areaEdges, layout, polygonName, areasGridStyle } = this
+        const config = {
+            latLongs,
+            areas,
+            rooms,
+            areaEdges,
+            layout,
+            polygonName,
+            areasGridStyle
+        }
+        console.log(JSON.stringify(config))
+        // axios.post(`${process.env.REACT_APP_API_URL}/api/layouts`, JSON.stringify(config))
+        return Promise.resolve()
     }
 
 }
+export type LatLongs = ConstructorStore['latLongs']
+export type Areas = ConstructorStore['areas']
+export type Rooms = ConstructorStore['rooms']
+export type AreaEdges = ConstructorStore['areaEdges']
+export type Layout = ConstructorStore['layout']
+export type PolygonName = ConstructorStore['polygonName']
+export type AreasGridStyle = ConstructorStore['areasGridStyle']

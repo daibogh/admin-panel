@@ -44,9 +44,9 @@ const BuildingPlan: React.FC = () => {
           <div className={style.e__door} />
         </div>
         <div className={style.f} />
-        <Person x={10} y={50} title='Петр Баранов (месит глину)' />
-        <Person x={200} y={50} title='Игорь Бесчастнов (месит глину)' />
-        <Person x={10} y={350} title='Василий Ковалев (месит глину)' />
+        <Person x={10} y={50} title='Петр Баранов (обедает)' />
+        <Person x={200} y={50} title='Игорь Бесчастнов (работает со сварочным аппаратом)' />
+        <Person x={10} y={350} title='Василий Ковалев (нет данных)' />
       </div>
     </Draggable>
   )

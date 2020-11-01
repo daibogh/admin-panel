@@ -1,3 +1,4 @@
+@import 'styles/globals';
 .root {
     display: flex;
     justify-content: center;
@@ -5,19 +6,36 @@
     flex-direction: column;
     position: relative;
 }
+.iconWrapper {
+    border-radius: 50%;
+    background-color: aliceblue;
+    display: flex;
+    width: fit-content;
+    justify-content: center;
+    align-items: center;
+}
 .person {
     position: absolute;
     transition: transform 4s linear;
 }
 .areaForm {
     display: grid;
-    min-width: 600px;
-    min-height: 600px;
+    min-width: 300px;
+    min-height: 300px;
+    @include respond-to(sm) {
+        min-width: 600px;
+        min-height: 600px;;
+    }
     // border: 2px solid gray;
     & > * {
-        width: 56px;
-        height: 56px;
+        width: 26px;
+        height: 26px;
+        @include respond-to(sm) {
+            width: 56px;
+            height: 56px;
+        }
     }
+
 }
 .a000,
 .a001,

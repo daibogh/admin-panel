@@ -1,6 +1,9 @@
+@import 'styles/globals';
 .root {
     display: grid;
-    grid-template-columns: min-content max-content;
+    @include respond-to(sm) {
+        grid-template-columns: min-content max-content;
+    }
 }
 .building {
     padding: 15px;

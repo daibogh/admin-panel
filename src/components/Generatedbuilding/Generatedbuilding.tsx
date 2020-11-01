@@ -5,8 +5,9 @@ import { RouteComponentProps } from '@reach/router';
 import cn from 'classnames'
 import _ from 'lodash'
 import { useStore } from '../../store/RootStore';
-import { Tooltip } from '@material-ui/core';
+import { Badge, Tooltip } from '@material-ui/core';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity'
+import { useRespondTo } from '../../hooks/useRespondTo';
 
 interface GeneratedbuildingProps extends RouteComponentProps{
   className?: string
@@ -14,23 +15,31 @@ interface GeneratedbuildingProps extends RouteComponentProps{
 
 const Person = ({offsetX, offsetY, name}: 
   { name: string; offsetX: number; offsetY: number}) => {
-    console.log({offsetX, offsetY})
-    // style={{left: `${offsetX}px`, top: `${offsetY}px`}}
+  const isSm = useRespondTo({type: 'gte', breakpoint: 'sm'})
   return <div className={style.person} style={{transform: `translate(${offsetX}px,${offsetY}px)`}}>
-    <Tooltip title={name}>
+    {isSm ? <Tooltip title={name}>
+      <div className={style.iconWrapper}>
       <PermIdentityIcon />
+      </div>
     </Tooltip>
+    : <Badge color='primary' badgeContent={name.split(' ')[0]}>
+      <div className={style.iconWrapper}>
+        <PermIdentityIcon />
+      </div>
+    </Badge>  
+  }
   </div>
 }
 
 const Generatedbuilding: React.FC<GeneratedbuildingProps> = ({ className }) => {
   const { building: { config, people, receivePeople, dispose } } = useStore()
+  const isSm = useRespondTo({ type: 'gte', breakpoint: 'sm'})
   useEffect(() => {
     if (config?.polygonName)
       receivePeople()
     return () => dispose()
   }, [config])
-  const coef = 60 // длина одной ячейки TODO исправить на вычисление через ref
+  const coef = isSm ? 60 : 30 // длина одной ячейки TODO исправить на вычисление через ref
   if (config === null) {
     return null
   }

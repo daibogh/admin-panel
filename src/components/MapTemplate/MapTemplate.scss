@@ -1,27 +1,27 @@
 @import 'styles/globals';
 .areaForm {
-    display: grid;
-    min-width: 300px;
-    min-height: 300px;
-    margin-bottom: auto;
+  display: grid;
+  min-width: 300px;
+  min-height: 300px;
+  margin-bottom: auto;
+  & > * {
+    width: 26px;
+    height: 26px;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  @include respond-to(sm) {
+    min-width: 600px;
+    min-height: 600px;
     & > * {
-        width: 26px;
-        height: 26px;
-        &:hover {
-            cursor: pointer;
-        }
+      width: 56px;
+      height: 56px;
+      &:hover {
+        cursor: pointer;
+      }
     }
-    @include respond-to(sm) {
-        min-width: 600px;
-        min-height: 600px;
-        & > * {
-            width: 56px;
-            height: 56px;
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+  }
 }
 .a000,
 .a001,
@@ -123,10 +123,10 @@
 .a097,
 .a098,
 .a099 {
-    background-color: hotpink;
-    &:hover {
-        background-color: rgb(38, 107, 211);
-    }
+  background-color: hotpink;
+  &:hover {
+    background-color: rgb(38, 107, 211);
+  }
 }
 .b000,
 .b001,
@@ -228,8 +228,8 @@
 .b097,
 .b098,
 .b099 {
-    background-color: rgb(38, 107, 211);
-    &:hover {
-        background-color: hotpink;
-    }
+  background-color: rgb(38, 107, 211);
+  &:hover {
+    background-color: hotpink;
+  }
 }

@@ -1,42 +1,41 @@
 @import 'styles/globals';
 .root {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: relative;
 }
 .iconWrapper {
-    border-radius: 50%;
-    background-color: aliceblue;
-    display: flex;
-    width: fit-content;
-    justify-content: center;
-    align-items: center;
-    transition: background-color .1s;
+  border-radius: 50%;
+  background-color: aliceblue;
+  display: flex;
+  width: fit-content;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.1s;
 }
 .person {
-    position: absolute;
-    transition: transform 4s linear;
+  position: absolute;
+  transition: transform 4s linear;
 }
 .areaForm {
-    display: grid;
-    min-width: 300px;
-    min-height: 300px;
+  display: grid;
+  min-width: 300px;
+  min-height: 300px;
+  @include respond-to(sm) {
+    min-width: 600px;
+    min-height: 600px;
+  }
+  // border: 2px solid gray;
+  & > * {
+    width: 26px;
+    height: 26px;
     @include respond-to(sm) {
-        min-width: 600px;
-        min-height: 600px;;
+      width: 56px;
+      height: 56px;
     }
-    // border: 2px solid gray;
-    & > * {
-        width: 26px;
-        height: 26px;
-        @include respond-to(sm) {
-            width: 56px;
-            height: 56px;
-        }
-    }
-
+  }
 }
 .a000,
 .a001,
@@ -138,7 +137,7 @@
 .a097,
 .a098,
 .a099 {
-    background-color: hotpink;
+  background-color: hotpink;
 }
 .b000,
 .b001,
@@ -240,8 +239,8 @@
 .b097,
 .b098,
 .b099 {
-    background-color: rgb(38, 107, 211);
-    &:hover {
-        background-color: hotpink;
-    }
+  background-color: rgb(38, 107, 211);
+  &:hover {
+    background-color: hotpink;
+  }
 }

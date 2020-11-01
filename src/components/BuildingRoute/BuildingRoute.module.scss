@@ -1,16 +1,16 @@
 @import 'styles/globals';
 .root {
-    display: grid;
-    @include respond-to(sm) {
-        grid-template-columns: 120px max-content 1fr;
-    }
+  display: grid;
+  @include respond-to(sm) {
+    grid-template-columns: 120px max-content 1fr;
+  }
 }
 .list {
-    padding-top: 15px;
+  padding-top: 15px;
 }
 .building {
-    padding: 10px;
+  padding: 10px;
 }
 .info {
-    padding: 10px;
+  padding: 10px;
 }

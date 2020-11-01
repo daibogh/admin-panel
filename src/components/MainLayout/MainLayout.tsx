@@ -9,18 +9,15 @@ import InboxIcon from '@material-ui/icons/MoveToInbox'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ContactsIcon from '@material-ui/icons/Contacts'
 import ListItemText from '@material-ui/core/ListItemText'
 import MailIcon from '@material-ui/icons/Mail'
 import MenuIcon from '@material-ui/icons/Menu'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import ControlCameraIcon from '@material-ui/icons/ControlCamera'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles, useTheme, Theme, createStyles } from '@material-ui/core/styles'
-import { Router, Link } from "@reach/router"
-import { HomeRoute } from '../HomeRoute'
-import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { Router, Link } from '@reach/router'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
 import { TemplateRoute } from '../TemplateRoute'
 import { NotificationMessage } from '../NotificationMessage'
 import { BuildingRoute } from '../BuildingRoute'
@@ -58,10 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       height: 'calc(100% - 64px)',
       width: '100%',
-      paddingTop: '64px',
-      // display: 'flex',
-      // justifyContent: 'space-around',
-      // alignItems: 'center'
+      paddingTop: '64px'
     }
   })
 )
@@ -85,8 +79,8 @@ export default function MainLayout(props: Props) {
           // { label: 'План здания', Icon: ControlCameraIcon, path: '/'},
           // { label: 'Список сотрудников', Icon: ContactsIcon, path: '/employees' },
           // { label: 'Уведомления', Icon: MailIcon, path: '/notifications'},
-          { label: 'Здания', Icon: MailIcon, path: '/buildings'},
-          { label: 'Новый шаблон', Icon: AddCircleIcon, path: '/templates'}
+          { label: 'Здания', Icon: MailIcon, path: '/' },
+          { label: 'Новый шаблон', Icon: AddCircleIcon, path: '/templates' }
         ].map(({ label, Icon, path }, index) => (
           <Link key={path} to={path}>
             <ListItem button key={label}>
@@ -161,9 +155,9 @@ export default function MainLayout(props: Props) {
       </nav>
       <main className={classes.content}>
         <Router>
-          <HomeRoute path='/' />
+          {/* <HomeRoute path='/' /> */}
           <TemplateRoute path='/templates' />
-          <BuildingRoute path='/buildings' />
+          <BuildingRoute path='/' />
         </Router>
       </main>
       <NotificationMessage />

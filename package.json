@@ -43,8 +43,8 @@
     "workbox-streams": "^5.1.3"
   },
   "scripts": {
-    "start": "SASS_PATH=node_modules:src REACT_APP_API_URL=http://drop-table.tech BROWSER=none react-scripts start",
-    "build": "SASS_PATH=node_modules:src react-scripts build",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "serve-build": "yarn build && serve -s build",
     "test": "react-scripts test",
     "cc": "create-component",

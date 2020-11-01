@@ -23,13 +23,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-
 const HomeRoute: React.FC<HomeRouteProps> = ({ className }) => {
   const styles = useStyles()
-  return <div className={cn(styles.content, className)}>
-    <BuildingPlan />
-    <FloorsPlan />
-  </div>
+  return (
+    <div className={cn(styles.content, className)}>
+      <BuildingPlan />
+      <FloorsPlan />
+    </div>
+  )
 }
 
 export default observer(HomeRoute)

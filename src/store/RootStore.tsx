@@ -1,20 +1,20 @@
 import React from 'react'
-import {makeObservable, observable} from 'mobx'
+import { makeObservable, observable } from 'mobx'
 import { useLocalStore } from 'mobx-react'
 import { ConstructorStore } from './ConstructorStore'
 import { NotificationStore } from './NotificationStore'
 import { Buildingstore } from './BuildingStore'
 
 export default class RootStore {
-    constructorStore: ConstructorStore
-    notifications: NotificationStore
-    building: Buildingstore
-    constructor() {
-      makeObservable(this, { constructorStore: observable, notifications: observable, building: observable})
-      this.constructorStore = new ConstructorStore()
-      this.notifications = new NotificationStore()
-      this.building = new Buildingstore()
-    }
+  constructorStore: ConstructorStore
+  notifications: NotificationStore
+  building: Buildingstore
+  constructor() {
+    makeObservable(this, { constructorStore: observable, notifications: observable, building: observable })
+    this.constructorStore = new ConstructorStore()
+    this.notifications = new NotificationStore()
+    this.building = new Buildingstore()
+  }
 }
 
 const storeContext = React.createContext<RootStore | null>(null)

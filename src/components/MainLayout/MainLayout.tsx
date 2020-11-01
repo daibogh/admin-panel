@@ -82,9 +82,9 @@ export default function MainLayout(props: Props) {
       <Divider />
       <List>
         {[
-          { label: 'План здания', Icon: ControlCameraIcon, path: '/'},
-          { label: 'Список сотрудников', Icon: ContactsIcon, path: '/employees' },
-          { label: 'Уведомления', Icon: MailIcon, path: '/notifications'},
+          // { label: 'План здания', Icon: ControlCameraIcon, path: '/'},
+          // { label: 'Список сотрудников', Icon: ContactsIcon, path: '/employees' },
+          // { label: 'Уведомления', Icon: MailIcon, path: '/notifications'},
           { label: 'Здания', Icon: MailIcon, path: '/buildings'},
           { label: 'Шаблоны', Icon: AddCircleIcon, path: '/templates'}
         ].map(({ label, Icon, path }, index) => (

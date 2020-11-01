@@ -1,3 +1,4 @@
+@import 'styles/globals';
 $window-color: #fafafa;
 
 @mixin vertical-window {
@@ -25,7 +26,7 @@ $window-color: #fafafa;
             gray 10px,
           );
 }
-@import 'styles/globals';
+
 .root {
     position: relative;
     width: 300px;

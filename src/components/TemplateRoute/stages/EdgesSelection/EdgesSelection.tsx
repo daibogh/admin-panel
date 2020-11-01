@@ -1,12 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import style from './EdgesSelection.module.scss'
 import { observer } from 'mobx-react'
 import { RouteComponentProps } from '@reach/router';
 import cn from 'classnames'
 import { useStore } from '../../../../store/RootStore';
 import { Instructions } from '../../../Instructions';
-import { Button, Input } from '@material-ui/core';
+import { Button, Grid, Input, TextField } from '@material-ui/core';
 import _ from 'lodash'
+import { MapTemplate } from '../../../MapTemplate';
+import { useRespondTo } from '../../../../hooks/useRespondTo';
 
 interface EdgesSelectionProps extends RouteComponentProps{
   className?: string
@@ -15,6 +16,7 @@ interface EdgesSelectionProps extends RouteComponentProps{
 
 const EdgesSelection: React.FC<EdgesSelectionProps> = ({ className, setContinue }) => {
   const { constructorStore : { areaEdges, edgesSaved, areas, latLongs, setPolygonName, rooms, areasGridStyle, saveLatLong, isPolygonNameValid } } = useStore()
+  const isSm = useRespondTo({type: 'gte', breakpoint: 'sm'})
   const [area, setArea] = useState<string | null>(null)
   const [lat, setLat] = useState<number | null>(null)
   const [long, setLong] = useState<number | null>(null)
@@ -27,7 +29,10 @@ const EdgesSelection: React.FC<EdgesSelectionProps> = ({ className, setContinue 
     if (lat && long && area)
       saveLatLong({area, lat, long})
       setArea(null)
-  }, [lat, long, area, saveLatLong])
+      setLat(null)
+      setLong(null)
+
+  }, [lat, long, area, saveLatLong, setLat, setLong])
   useEffect(() => {
     if (edgesSaved && isPolygonNameValid) {
       setContinue(true)
@@ -35,30 +40,33 @@ const EdgesSelection: React.FC<EdgesSelectionProps> = ({ className, setContinue 
       setContinue(false)
     }
   }, [edgesSaved, isPolygonNameValid, setContinue])
-return <div className={cn(style.root, className)}>
-  <Instructions text='Расставьте координаты выбранным точкам' />
-    <div className={style.areaForm} style={{gridTemplateAreas: areasGridStyle}}>
+return <>
+  <Instructions text='Расставьте координаты' />
+    <MapTemplate style={{gridTemplateAreas: areasGridStyle}}>
       {
         _.flatten(areas).map(
           area => <div key={area}
           style={{backgroundColor: Object.values(rooms)
             .find(elem => elem.zones.includes(area))?.color}} 
           onClick={() => chooseHandler(area)}
-          className={style[area]}>
+          className={area}>
             {Object.values(areaEdges).includes(area) && area}</div>)
       }
-    </div>
+    </MapTemplate>
     {
-      area && <div>
-        <Input type='number' onChange={(e) => setLat(+e.target.value)}/>
-        <Input type='number' onChange={(e) => setLong(+e.target.value)} />
-        <Button disabled={!lat || !long} onClick={saveEdge}>сохранить</Button>
-      </div>
+      area ? <>
+         <Grid container direction={isSm? 'row' : 'column'} justify='center' alignItems='center' style={{padding: '0 10px'}}>
+          <TextField type='number'  label="Широта" onChange={(e) => setLat(+e.target.value)}/>
+          <TextField type='number'  label="Долгота" onChange={(e) => setLong(+e.target.value)}/>
+          <Button style={{paddingTop: '15px'}} disabled={!lat || !long} onClick={saveEdge}>сохранить</Button>
+        </Grid>
+        
+      </> : edgesSaved ? <>
+          <TextField style={{margin: 'auto'}} label='Название полигона' onChange={(e) => setPolygonName(e.target.value)} />
+      </> : <div style={{height: '210px', visibility: 'hidden'}} />
     }
-    {edgesSaved && <div>
-      <input type='text' onChange={(e) => setPolygonName(e.target.value)}/>
-      </div>}
-</div>
+    
+</>
 }
 
 export default observer(EdgesSelection)

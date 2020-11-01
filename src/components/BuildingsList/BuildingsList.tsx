@@ -9,7 +9,7 @@ import { fetchBuildingConfig, fetchBuildingsList } from '../../api/fetchers';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { List } from '@material-ui/core';
+import { FormControl, FormHelperText, Grid, InputLabel, List, MenuItem, Select } from '@material-ui/core';
 import { Generatedbuilding } from '../Generatedbuilding';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -23,15 +23,16 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const BuildListItem = observer(({polygonName}: { polygonName: string}) => {
+const BuildListItem = observer(({polygonName, id}: { polygonName: string, id: number}) => {
   const { building: { init } } = useStore() 
   const getBuildingConfig = useCallback(() => {
-    fetchBuildingConfig(polygonName).then((resp) => { init(resp.data) })
-}, [init, polygonName])
+    fetchBuildingConfig(id).then((resp) => { init(resp.data.layout) })
+}, [init, id])
   return (
-    <ListItem button key={polygonName}>
-      <ListItemText primary={polygonName} onClick={() => getBuildingConfig()}/>
-    </ListItem>
+  <MenuItem value={polygonName} onClick={() => getBuildingConfig()}>{polygonName}</MenuItem>
+    // <ListItem button key={polygonName}>
+    //   <ListItemText primary={polygonName} onClick={() => getBuildingConfig()}/>
+    // </ListItem>
   )
 })
 interface BuildingsListProps extends RouteComponentProps{
@@ -39,17 +40,28 @@ interface BuildingsListProps extends RouteComponentProps{
 }
 
 const BuildingsList: React.FC<BuildingsListProps> = ({ className }) => {
-  const [list, setList] = useState<string[]>([])
+  const [list, setList] = useState<{name: string; id: number}[]>([])
+  const { building: {config}} = useStore()
   useEffect(() => {
     fetchBuildingsList().then((resp) => {
       console.log({data: resp.data })
-      setList(resp.data.map(({title})=>title))
+      setList(resp.data.map(({title, id})=>({name: title, id})))
     })
 },[])
   return <div className={cn(style.root, className)}>
-    <List className={style.list}>
-        {list.map((name) => <BuildListItem key={name} polygonName={name} />)}
-      </List>
+      <Grid container justify='center'>
+      <FormControl>
+        <Select
+          value={config?.polygonName}
+        >
+          {list.map(({name, id}) => <BuildListItem key={name} polygonName={name} id={id}/>)}
+          {/* <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={20}>Twenty</MenuItem>
+          <MenuItem value={30}>Thirty</MenuItem> */}
+        </Select>
+        <FormHelperText>Выберите полигон</FormHelperText>
+      </FormControl>
+      </Grid>
   </div>
 }
 

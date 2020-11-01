@@ -206,9 +206,15 @@ export class ConstructorStore {
             polygonName,
             areasGridStyle
         }
-        console.log(JSON.stringify(config))
-        // axios.post(`${process.env.REACT_APP_API_URL}/api/layouts`, JSON.stringify(config))
-        return Promise.resolve()
+        return axios.post(`${process.env.REACT_APP_API_URL}/api/site`, {data: config, title: polygonName, corners: [{
+            lat: latLongs[areaEdges.bottom as string].lat,
+            long: latLongs[areaEdges.bottom as string].long,
+        }, {
+            lat: latLongs[areaEdges.right as string].lat,
+            long: latLongs[areaEdges.right as string].long,
+        }
+    ]})
+        // return Promise.resolve()
     }
 
 }

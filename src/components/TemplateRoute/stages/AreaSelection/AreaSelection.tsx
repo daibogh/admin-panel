@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react'
-import style from './AreaSelection.module.scss'
 import { observer } from 'mobx-react'
 import { RouteComponentProps } from '@reach/router';
 import cn from 'classnames'
 import _ from 'lodash'
 import { Instructions } from '../../../Instructions';
 import { useStore } from '../../../../store/RootStore';
+import { MapTemplate } from '../../../MapTemplate';
 
 interface AreaSelectionProps extends RouteComponentProps{
   className?: string
@@ -30,14 +30,15 @@ const AreaSelection: React.FC<AreaSelectionProps> = ({ className, setContinue })
       setContinue(true)
     }
   }, [cs])
-  return <div className={cn(style.root, className)}>
+  return <>
     <Instructions text='выберите зоны полигона' />
-    <div className={style.areaForm} style={{gridTemplateAreas: cs.areasGridStyle}}>
+    <MapTemplate style={{gridTemplateAreas: cs.areasGridStyle}}>
       {
-        _.flatten(cs.areas).map(area => <div key={area} onClick={() => chooseHandler(area)} className={style[area]}/>)
+        _.flatten(cs.areas).map(area => <div key={area} onClick={() => chooseHandler(area)} className={area}/>)
       }
-    </div>
-  </div>
+    </MapTemplate>
+    <div style={{height: '210px', visibility: 'hidden'}} />
+  </>
 }
 
 export default observer(AreaSelection)

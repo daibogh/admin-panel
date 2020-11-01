@@ -2,8 +2,11 @@
 .root {
     display: grid;
     @include respond-to(sm) {
-        grid-template-columns: min-content max-content;
+        grid-template-columns: 120px max-content;
     }
+}
+.list {
+    padding-top: 15px;
 }
 .building {
     padding: 15px;

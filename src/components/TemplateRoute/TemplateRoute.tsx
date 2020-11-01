@@ -13,22 +13,8 @@ import { toast } from 'react-toastify';
 interface TemplateRouteProps extends RouteComponentProps{
   className?: string
 }
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    content: {
-      flexGrow: 1,
-      height: '100vh',
-      display: 'flex',
-      justifyContent: 'space-around',
-      alignItems: 'center'
-    }
-  })
-)
-
-
 
 const TemplateRoute: React.FC<TemplateRouteProps> = ({ className }) => {
-  const classes = useStyles()
   const [stage, setStage] = useState(0)
   const [canContinue, setContinue] = useState(false)
   const { constructorStore: { sendConfigToServer, polygonName }, notifications} = useStore()
@@ -48,9 +34,9 @@ const TemplateRoute: React.FC<TemplateRouteProps> = ({ className }) => {
       )
     }
   }, [stage, stages, sendConfigToServer, notifications, polygonName])
-  return <div className={cn(style.root,classes.content, className)}>
+  return <div className={cn(style.root, className)}>
     {stages[stage]}
-    <Button disabled={!canContinue} onClick={() => {
+    <Button className={style.continueButton} style={{marginBottom: 'auto', display: !canContinue ? 'none': undefined}} disabled={!canContinue} onClick={() => {
       setStage(stage => stage + 1)
       setContinue(false)
 

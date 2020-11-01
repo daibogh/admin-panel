@@ -6,8 +6,10 @@ import cn from 'classnames'
 import _ from 'lodash';
 import { useStore } from '../../../../store/RootStore';
 import { Instructions } from '../../../Instructions';
-import { Button } from '@material-ui/core';
+import { Badge, Button, Checkbox, FormControlLabel, Grid, TextField } from '@material-ui/core';
 import { useToggle } from 'react-use'
+import { MapTemplate } from '../../../MapTemplate';
+import { useRespondTo } from '../../../../hooks/useRespondTo';
 
 interface RoomSelectionProps extends RouteComponentProps{
   className?: string
@@ -21,6 +23,7 @@ const RoomSelection: React.FC<RoomSelectionProps> = ({ className, setContinue })
   const [ ableToRoom, setAbleToRoom] = useState(false)
   const [color, setColor] = useState('')
   const [withDevices, toggleWithDevices] = useToggle(false)
+  const isSm = useRespondTo({type: 'gte', breakpoint: 'sm'})
   const chooseHandler = useCallback((area: string) => {
     if (Object.keys(cs.rooms).some(roomKey => ~cs.rooms[roomKey].zones.indexOf(area))) {
       return 
@@ -48,22 +51,49 @@ const RoomSelection: React.FC<RoomSelectionProps> = ({ className, setContinue })
       setContinue(true)
     }
   },[color, roomName, setAbleToRoom, setColor, zones, setContinue, withDevices, setZones, cs])
-  return <div className={cn(style.root, className)}>
-    <Instructions text='Поделите выбранные зоны на комнаты' />
-    <div className={style.areaForm} style={{gridTemplateAreas: cs.areasGridStyle}}>
+  return <>
+    <Instructions text='Поделите зоны на комнаты' />
+    <MapTemplate style={{gridTemplateAreas: cs.areasGridStyle}}>
       {
-        _.flatten(cs.areas).map(area => <div key={area} style={{backgroundColor: Object.values(cs.rooms).find(elem => elem.zones.includes(area))?.color}} onClick={() => chooseHandler(area)} className={style[area]}/>)
+        _.flatten(cs.areas).map(area => <div key={area} style={{backgroundColor: ~zones.indexOf(area) ? color: Object.values(cs.rooms).find(elem => elem.zones.includes(area))?.color}} onClick={() => chooseHandler(area)} className={area}/>)
       }
-    </div>
-    {
-      ableToRoom && <div>
-        <input type='color' onChange={(e) => setColor(e.target.value)}/>
-        <input type='text' onChange={(e) => setRoomName(e.target.value)} />
-        <input type='checkbox' onClick={toggleWithDevices} />
-        <Button onClick={saveRoom}>сохранить</Button>
-      </div>
-    }
-  </div>
+    </MapTemplate>
+
+    {!ableToRoom ? <div style={{height: '210px', visibility: 'hidden'}} />:
+    <>
+        <Grid container
+              direction="row"
+              justify="center"
+              alignItems="center"
+              >
+            <input type='color' onChange={(e) => setColor(e.target.value)} style={{marginRight: '15px'}}/>
+            <FormControlLabel
+            control={
+              <Checkbox
+                checked={withDevices}
+                onChange={toggleWithDevices}
+                color='primary'
+              />
+            }
+            label="С датчиками?"
+          />
+          {isSm && <><TextField onChange={(e) => setRoomName(e.target.value)} label="Название комнаты" variant="outlined" />
+          <Button onClick={saveRoom}>сохранить</Button></>}
+        </Grid>
+
+       {!isSm && <> <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <TextField onChange={(e) => setRoomName(e.target.value)} label="Название комнаты" variant="outlined" />
+        </Grid>
+        
+        <Button onClick={saveRoom}>сохранить</Button> </>}
+      </>
+      }
+  </>
 }
 
 export default observer(RoomSelection)

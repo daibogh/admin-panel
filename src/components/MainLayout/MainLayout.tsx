@@ -88,7 +88,7 @@ export default function MainLayout(props: Props) {
           { label: 'Здания', Icon: MailIcon, path: '/buildings'},
           { label: 'Шаблоны', Icon: AddCircleIcon, path: '/templates'}
         ].map(({ label, Icon, path }, index) => (
-          <Link to={path}>
+          <Link key={path} to={path}>
             <ListItem button key={label}>
               <ListItemIcon>
                 <Icon />

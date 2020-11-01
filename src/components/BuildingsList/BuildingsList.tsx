@@ -41,16 +41,14 @@ interface BuildingsListProps extends RouteComponentProps{
 const BuildingsList: React.FC<BuildingsListProps> = ({ className }) => {
   const [list, setList] = useState<string[]>([])
   useEffect(() => {
-    const interval = setInterval(() => {
-      fetchBuildingsList().then((resp) => {
-        setList(resp.data)
-      })
+    fetchBuildingsList().then((resp) => {
+      console.log({data: resp.data })
+      setList(resp.data.map(({title})=>title))
     })
-    return () => clearInterval(interval)
-  })
+},[])
   return <div className={cn(style.root, className)}>
     <List className={style.list}>
-        {list.map((name) => <BuildListItem polygonName={name} />)}
+        {list.map((name) => <BuildListItem key={name} polygonName={name} />)}
       </List>
   </div>
 }

@@ -15,7 +15,8 @@ interface GeneratedbuildingProps extends RouteComponentProps{
 const Person = ({offsetX, offsetY, name}: 
   { name: string; offsetX: number; offsetY: number}) => {
     console.log({offsetX, offsetY})
-  return <div className={style.person} style={{left: `${offsetX}px`, top: `${offsetY}px`}}>
+    // style={{left: `${offsetX}px`, top: `${offsetY}px`}}
+  return <div className={style.person} style={{transform: `translate(${offsetX}px,${offsetY}px)`}}>
     <Tooltip title={name}>
       <PermIdentityIcon />
     </Tooltip>
@@ -23,15 +24,22 @@ const Person = ({offsetX, offsetY, name}:
 }
 
 const Generatedbuilding: React.FC<GeneratedbuildingProps> = ({ className }) => {
-  const { building: { config } } = useStore()
+  const { building: { config, people, receivePeople, dispose } } = useStore()
+  useEffect(() => {
+    if (config?.polygonName)
+      receivePeople()
+    return () => dispose()
+  }, [config])
   const coef = 60 // длина одной ячейки TODO исправить на вычисление через ref
-  
   if (config === null) {
     return null
   }
   const { areas, rooms, areasGridStyle, latLongs, areaEdges  } = config
 
-  const persons = [{ lat: 1.5, long: 3.3, name: 'Петя Баранов'}].map(({lat, long, name}) => {
+  const persons = 
+  people
+  //[{ lat: 56.248776, long: 43.833324, name: 'Петя Баранов'}]
+  .map(({lat, long, name}) => {
     // const objLength = 60 * ()
     const rowWithRightElem = areas.find(row => row.includes(areaEdges.right as string))
     const rowWithLeftElem = areas.find(row => row.includes(areaEdges.left as string))
@@ -60,7 +68,7 @@ const Generatedbuilding: React.FC<GeneratedbuildingProps> = ({ className }) => {
   return <div className={cn(style.root, className)}>
     {
       config ? <div className={style.areaForm} style={{gridTemplateAreas: areasGridStyle}}>
-        {persons.map((props) => <Person {...props} />)}
+        {persons.map((props) => <Person key={props.name} {...props} />)}
       {
         _.flatten(areas).map(
           area => <div

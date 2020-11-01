@@ -8,10 +8,12 @@
     display: grid;
     min-width: 400px;
     min-height: 400px;
-    border: 2px solid gray;
     & > * {
         width: 36px;
         height: 36px;
+        &:hover {
+            cursor: pointer;
+        }
     }
 }
 .a000,
@@ -220,4 +222,7 @@
 .b098,
 .b099 {
     background-color: rgb(38, 107, 211);
+    &:hover {
+        background-color: hotpink;
+    }
 }

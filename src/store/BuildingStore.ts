@@ -21,7 +21,9 @@ export class Buildingstore {
             people: observable,
             receivePeople: action,
             dispose: action,
-            _interval: observable
+            _interval: observable,
+            person: observable,
+            selectPerson: action
         })
     }
 
@@ -39,5 +41,9 @@ export class Buildingstore {
     }
     dispose() {
         clearInterval(this?._interval)
+    }
+    person: string | null = null
+    selectPerson = (person: this['person']) => {
+        this.person = person
     }
 }

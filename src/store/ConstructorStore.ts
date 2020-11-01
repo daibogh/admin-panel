@@ -170,7 +170,6 @@ export class ConstructorStore {
         const topEdge = Math.min(...(zoneIndexes.map((p)=> p[0]) as number[]))
         const leftEdge = Math.min(...(zoneIndexes.map((p)=> p[1]) as number[]))
         const rightEdge = Math.max(...(zoneIndexes.map((p)=> p[1]) as number[]))
-        // console.log({ zones, zoneIndexes, bottomEdge, topEdge, leftEdge, rightEdge, buf})
         return { 
             top: Object.keys(buf).find(key => buf[key][0] === topEdge),
             bottom: Object.keys(buf).find(key => buf[key][0] === bottomEdge),

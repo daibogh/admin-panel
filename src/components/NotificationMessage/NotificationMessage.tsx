@@ -11,12 +11,6 @@ interface NotificationMessageProps extends RouteComponentProps{
 
 
 const NotificationMessage: React.FC<NotificationMessageProps> = () => {
-  // const { notifications: { setNotification } } = useStore()
-  // useEffect(() => {
-  //   return () => {
-  //     setNotification(null)
-  //   }
-  // }, [setNotification])
   return <ToastContainer />
 }
 

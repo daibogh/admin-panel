@@ -86,7 +86,7 @@ export default function MainLayout(props: Props) {
           // { label: 'Список сотрудников', Icon: ContactsIcon, path: '/employees' },
           // { label: 'Уведомления', Icon: MailIcon, path: '/notifications'},
           { label: 'Здания', Icon: MailIcon, path: '/buildings'},
-          { label: 'Шаблоны', Icon: AddCircleIcon, path: '/templates'}
+          { label: 'Новый шаблон', Icon: AddCircleIcon, path: '/templates'}
         ].map(({ label, Icon, path }, index) => (
           <Link key={path} to={path}>
             <ListItem button key={label}>
@@ -125,7 +125,7 @@ export default function MainLayout(props: Props) {
             <MenuIcon />
           </IconButton>
           <Typography variant='h6' noWrap>
-            Панель администрирования
+            Панель мониторинга
           </Typography>
         </Toolbar>
       </AppBar>

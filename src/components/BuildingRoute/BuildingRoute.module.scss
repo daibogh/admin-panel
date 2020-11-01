@@ -2,12 +2,15 @@
 .root {
     display: grid;
     @include respond-to(sm) {
-        grid-template-columns: 120px max-content;
+        grid-template-columns: 120px max-content 1fr;
     }
 }
 .list {
     padding-top: 15px;
 }
 .building {
-    padding: 15px;
+    padding: 10px;
+}
+.info {
+    padding: 10px;
 }

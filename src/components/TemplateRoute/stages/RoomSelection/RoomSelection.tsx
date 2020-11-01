@@ -65,6 +65,7 @@ const RoomSelection: React.FC<RoomSelectionProps> = ({ className, setContinue })
               direction="row"
               justify="center"
               alignItems="center"
+              style={{marginBottom: 'auto'}}
               >
             <input type='color' onChange={(e) => setColor(e.target.value)} style={{marginRight: '15px'}}/>
             <FormControlLabel

@@ -55,7 +55,7 @@ return <>
     </MapTemplate>
     {
       area ? <>
-         <Grid container direction={isSm? 'row' : 'column'} justify='center' alignItems='center' style={{padding: '0 10px'}}>
+         <Grid container direction={isSm? 'row' : 'column'} justify='center' alignItems='center' style={{marginBottom: 'auto', padding: '0 10px'}}>
           <TextField type='number'  label="Широта" onChange={(e) => setLat(+e.target.value)}/>
           <TextField type='number'  label="Долгота" onChange={(e) => setLong(+e.target.value)}/>
           <Button style={{paddingTop: '15px'}} disabled={!lat || !long} onClick={saveEdge}>сохранить</Button>

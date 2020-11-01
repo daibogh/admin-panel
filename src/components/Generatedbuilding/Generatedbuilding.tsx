@@ -5,20 +5,28 @@ import { RouteComponentProps } from '@reach/router';
 import cn from 'classnames'
 import _ from 'lodash'
 import { useStore } from '../../store/RootStore';
-import { Badge, Tooltip } from '@material-ui/core';
+import { Badge, createStyles, makeStyles, Theme, Tooltip } from '@material-ui/core';
 import PermIdentityIcon from '@material-ui/icons/PermIdentity'
 import { useRespondTo } from '../../hooks/useRespondTo';
 
 interface GeneratedbuildingProps extends RouteComponentProps{
   className?: string
 }
-
-const Person = ({offsetX, offsetY, name}: 
+const useStyles = makeStyles((theme: Theme) => createStyles({
+  selected: {
+   backgroundColor: theme.palette.primary.main,
+   color: 'white'
+  },
+})
+)
+const Person = observer(({offsetX, offsetY, name}: 
   { name: string; offsetX: number; offsetY: number}) => {
+  const classes = useStyles()
+  const { building: { person } } = useStore()
   const isSm = useRespondTo({type: 'gte', breakpoint: 'sm'})
   return <div className={style.person} style={{transform: `translate(${offsetX}px,${offsetY}px)`}}>
-    {isSm ? <Tooltip title={name}>
-      <div className={style.iconWrapper}>
+    {isSm ? <Tooltip open={person === name} title={name}>
+      <div className={cn(style.iconWrapper,{[classes.selected]: person === name})}>
       <PermIdentityIcon />
       </div>
     </Tooltip>
@@ -29,7 +37,7 @@ const Person = ({offsetX, offsetY, name}:
     </Badge>  
   }
   </div>
-}
+})
 
 const Generatedbuilding: React.FC<GeneratedbuildingProps> = ({ className }) => {
   const { building: { config, people, receivePeople, dispose } } = useStore()
@@ -65,9 +73,6 @@ const Generatedbuilding: React.FC<GeneratedbuildingProps> = ({ className }) => {
     const longMin = latLongs[areaEdges.left as string].long
     const longMax = latLongs[areaEdges.right as string].long
 
-    console.log({ latMin, latMax, longMin, longMax, topIndex, long, lat, objHeight, objLength, bottomIndex })
-    console.log(coef * topIndex + objHeight)
-    console.log(((long - longMin)/(longMax - longMin) * objHeight))
     const offsetX = coef * leftIndex + ((long - longMin)/(longMax - longMin)) * objLength
     const offsetY = coef * topIndex + (((lat - latMin)/(latMax - latMin)) * objHeight)
     // 60 * 3 + 180 - ((1.5 - 1)/(3 - 1))* 180
